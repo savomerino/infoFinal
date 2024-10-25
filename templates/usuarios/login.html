@@ -1,0 +1,29 @@
+{% extends 'base.html' %}  {# Extiende de base.html para mantener la estructura común #}
+{% load static %}  {# Carga el sistema de plantillas estáticas de Django para manejar archivos CSS y JS #}
+
+<title>{% block title %} Login de Usuario {% endblock title %}</title>  {# Define el título de la página #}
+
+{% block contenido %}  {# Comienza el bloque de contenido específico de esta plantilla #}
+<center>
+    <form method="POST" style="margin-top: 300px;">  {# Formulario para iniciar sesión, método POST para enviar datos #}
+        <h1 class="h1">Iniciar sesión</h1>  {# Título del formulario #}
+        <br>
+        <div class="messages">  {# Contenedor para mostrar mensajes, como errores de inicio de sesión #}
+            {% for message in messages %}  {# Itera sobre los mensajes para mostrarlos #}
+                <table {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</table>  {# Muestra el mensaje, aplicando clases si las hay #}
+            {% endfor %}
+        </div>
+        <br>
+        {% csrf_token %}  {# Token CSRF para proteger contra ataques #}
+        <div class="container">
+            <table>{{ form }}</table>  {# Muestra el formulario de inicio de sesión, que incluye campos para usuario y contraseña #}
+            <br>
+            <a style="color: black;" href="{% url 'apps.usuario:registrar' %}">¿Todavía no estás registrado? ¡Regístrate!</a>  {# Enlace para redirigir a la página de registro #}
+            <br>
+            <a style="color: black;" href="{% url 'apps.usuario:password_reset' %}">¿Olvidaste tu contraseña? Reestablecela</a>  {# Enlace para recuperar la contraseña #}
+            <br><br>
+            <button type="submit" class="btn btn-success btn-lg px-3">Iniciar sesión</button>  {# Botón para enviar el formulario #}
+        </div>
+    </form>
+</center>
+{% endblock %}  {# Finaliza el bloque de contenido específico de esta plantilla #}

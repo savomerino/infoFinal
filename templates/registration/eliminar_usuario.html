@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load colaborador_tags %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        {% if user.is_superuser or request.user|has_group:"Colaborador" %}
+            <div class="col-lg-6 col-md-8 col-sm-10 text-center">
+                <div class="card shadow-lg p-4">
+                    <h1 class="card-title mb-4">Eliminar usuario</h1>
+                    <p class="mb-4">¿Estás seguro que quieres eliminar el usuario "<strong>{{ object.username }}</strong>"?</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="eliminar_comentarios" id="eliminar_comentarios">
+                            <label class="form-check-label" for="eliminar_comentarios">
+                                ¿Desea eliminar también los comentarios del usuario?
+                            </label>
+                        </div>
+                        {% if es_colaborador %}
+                            <div class="form-check mt-3">
+                                <input class="form-check-input" type="checkbox" name="eliminar_posts" id="eliminar_posts">
+                                <label class="form-check-label" for="eliminar_posts">
+                                    ¿Desea eliminar también los posts del usuario?
+                                </label>
+                            </div>
+                        {% endif %}
+                        <br><br>
+                        <button type="submit" class="btn btn-danger btn-lg w-100">Sí, eliminar</button>
+                        <a href="{% url 'apps.usuario:usuario_list' %}" class="btn btn-outline-secondary btn-lg w-100 mt-3">No, cancelar</a>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <div class="container text-center" style="margin-top: 150px;">
+                <h1 class="display-4">¡No tienes permiso para entrar a esta página!</h1>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

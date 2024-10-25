@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load colaborador_tags %}
+
+{% block contenido %}
+<div class="container mt-5">
+
+    <!-- Título principal -->
+    <h1 class="text-center mb-5">Bienvenidos al Blog ECONOMIA 4.0</h1>
+
+    <img src="{% static 'img/portada.jpg' %}" alt="¡GANA DINERO!" style="max-width: 100%; height: auto;">
+
+    <!-- Texto de Introducción -->
+    <div style="max-width: 800px; margin: 100px auto; padding: 20px; text-align: center;">
+        <h1 style="font-family: 'Georgia', serif; font-size: 2.5rem; margin-bottom: 40px; color: #2c3e50; text-align: center;">
+            Explorando el Mundo de la Economía y las Finanzas
+        </h1>
+        <p style="font-family: 'Arial', sans-serif; font-size: 1.2rem; line-height: 1.8; margin-bottom: 20px; color: #34495e;">
+            En un mundo donde las decisiones financieras son más cruciales que nunca, nos adentramos en los conceptos, tendencias y herramientas que moldean nuestra economía.
+            Aquí, desglosamos temas complejos en ideas claras y accesibles, desde estrategias de inversión hasta análisis de mercado y consejos prácticos para la gestión de finanzas personales.
+        </p>
+        <p style="font-family: 'Arial', sans-serif; font-size: 1.2rem; line-height: 1.8; margin-bottom: 20px; color: #34495e;">
+            Sumérgete en artículos que abordan desde lo macroeconómico hasta lo cotidiano, y descubre cómo las decisiones que tomamos hoy pueden impactar nuestro futuro.
+        </p>
+    </div>
+
+    <!-- Carrusel de Posts Recientes -->
+    <div class="container-fluid mt-5">
+      <h2 class="text-center mb-4">Publicaciones Destacadas</h2>
+      <div class="owl-banner owl-carousel">
+        {% for i in posts|slice:":6" %}
+          <div class="item">
+            <a href="{% url 'apps.posts:post_individual' i.id %}">
+              <img src="{{ i.imagen.url }}" alt="" height="300px;">
+            </a>
+            <div class="item-content">
+              <div class="main-content">
+                <div class="meta-category">
+                  <span style="color: darkorange">{{ i.categoria }}</span>
+                  <a href="{% url 'apps.posts:post_individual' i.id %}">
+                    <h4 style="color: black">{{ i.titulo }}</h4>
+                  </a>
+                  <a style="color: orange;">{{ i.publicado }}</a>          
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Espaciado inferior para evitar que el contenido se superponga con el pie de página -->
+    <div style="height: 100px;"></div>
+
+</div>
+
+{% endblock contenido %}

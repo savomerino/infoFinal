@@ -1,0 +1,56 @@
+{% load colaborador_tags %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="mb-4">Comentarios</h2>
+
+            <!-- Sección de comentarios existentes -->
+            <div class="comments-section">
+                {% for comentario in comentarios %}
+                    <div class="card mb-4 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h5 class="card-title">{{ comentario.usuario }}</h5>
+                                <small class="text-muted">{{ comentario.fecha }}</small>
+                            </div>
+                            <p class="card-text">{{ comentario.texto }}</p>
+
+                            <!-- Opciones de edición/eliminación -->
+                            {% if user.is_superuser or comentario.usuario == user %}
+                                <div class="d-flex">
+                                    <a href="{% url 'apps.posts:comentario_editar' pk=comentario.pk %}?next={{ request.path }}" class="btn btn-sm btn-outline-primary me-2">Editar</a>
+                                    <a href="{% url 'apps.posts:comentario_eliminar' pk=comentario.pk %}" class="btn btn-sm btn-outline-danger">Eliminar</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% empty %}
+                    <div class="alert alert-info" role="alert">
+                        No hay comentarios - ¡Puedes ser el primero en comentar!
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Formulario para agregar nuevo comentario -->
+            <div id="comentario" class="comment-form mt-5">
+                {% if user.is_authenticated %}
+                    <h2>¡Deja tu comentario!</h2>
+                    <form method="POST" class="mt-3">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <textarea name="texto" placeholder="Ingresa tu comentario" class="form-control" style="margin-bottom: 10px;" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Comentar</button>
+                    </form>
+                {% else %}
+                    <div class="alert alert-warning" role="alert">
+                        Debes iniciar sesión o registrarte para comentar.
+                    </div>
+                    <a href="{% url 'apps.usuario:login' %}?next={{ request.path }}" class="btn btn-success btn-lg">Iniciar sesión</a>
+                    <input type="hidden" name="next" value="{{ request.path }}">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

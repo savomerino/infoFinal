@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load colaborador_tags %}
+
+{% block contenido %}
+<div class="container mt-5">
+    {% if user.is_superuser or request.user|has_group:"Colaborador" %}
+        <!-- Título del formulario -->
+        <h1 class="display-5 text-center mb-4">Agregar nueva categoría</h1>
+        
+        <!-- Formulario para agregar categoría -->
+        <form method="post" class="border p-4 rounded shadow-sm bg-light">
+            {% csrf_token %}
+            <div class="mb-3" style="margin-left: 35%; padding: 10px;">
+                {{ form.as_p }}
+            </div>
+            <!-- Botón de agregar categoría -->
+            <button type="submit" class="btn btn-primary btn-lg w-100">Agregar</button>
+        </form>
+        
+        <!-- Botón para listar todas las categorías -->
+        <div class="text-center mt-4">
+            <a href="{% url 'apps.posts:categoria_list' %}" class="btn btn-outline-secondary">Listar todas las categorías</a>
+        </div>
+
+    {% else %}
+        <!-- Mensaje de acceso denegado si el usuario no tiene permisos -->
+        <div class="alert alert-danger mt-5 text-center">
+            <h2>¡No tienes permiso para entrar a esta página!</h2>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

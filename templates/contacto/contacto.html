@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contenido %}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <!-- Card para el formulario de contacto -->
+            <div class="card shadow-lg border-0 p-4">
+                <!-- Título del formulario -->
+                <h1 class="text-center mb-4 text-primary">Contáctanos</h1>
+                <p class="text-center text-muted mb-4">Complete el siguiente formulario y nos pondremos en contacto con usted lo antes posible.</p>
+                
+                <!-- Mensajes de éxito/error -->
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <!-- Formulario de contacto -->
+                <form method="POST" class="needs-validation form-group col-sm-10" novalidate>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="nombre_apellido" name="nombre_apellido" placeholder="Ingresa tu nombre completo" class="form-control" style="margin-bottom: 10px;" required>
+                        <input type="email" name="email" placeholder="Ingresa tu Correo Electrónico" class="form-control" style="margin-bottom: 10px;" required>
+                        <input type="asunto" name="asunto" placeholder="Ingresa un Asunto" class="form-control" style="margin-bottom: 10px;" required>
+                        <textarea name="mensaje" placeholder="Ingresa tu mensaje" class="form-control" style="margin-bottom: 10px;" required></textarea>
+                    </div>
+                    
+                    <!-- Botón de enviar -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary mt-4">Enviar Mensaje</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

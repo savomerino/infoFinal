@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load colaborador_tags %}
+
+{% block contenido %}
+<div class="container text-center">
+    <!-- Botón de creación de post para superuser o colaboradores -->
+    {% if user.is_superuser or request.user|has_group:"Colaborador" %}
+        <div class="my-3">
+            <a id="boton_post" class="btn btn-primary" href="{% url 'apps.posts:crear_post' %}">Crear nuevo post</a>
+        </div>
+    {% endif %}
+
+    <!-- Filtros de orden -->
+    <h2>Ordenar por:</h2>
+    <ul class="list-inline">
+        <li class="list-inline-item"><a class="btn btn-secondary" href="{% url 'apps.posts:posts' %}?orden=reciente">Más reciente</a></li>
+        <li class="list-inline-item"><a class="btn btn-secondary" href="{% url 'apps.posts:posts' %}?orden=antiguo">Más antiguo</a></li>
+        <li class="list-inline-item"><a class="btn btn-secondary" href="{% url 'apps.posts:posts' %}?orden=alfabetico">Orden alfabético</a></li>
+    </ul>
+
+    <!-- Listado de posts -->
+    {% for i in posts %}
+        <div class="post my-5 p-3 border rounded">
+            <!-- Título -->
+            <h1>{{ i.titulo }}</h1>
+
+            <!-- Subtítulo -->
+            {% if i.subtitulo %}
+                <h2>{{ i.subtitulo }}</h2>
+            {% endif %}
+
+            <!-- Imagen -->
+            {% if i.imagen %}
+                <div class="post-imagen my-3">
+                    <img src="{{ i.imagen.url }}" alt="Imagen del post" class="img-fluid">
+                </div>
+            {% endif %}
+
+            <!-- Creador debajo de la imagen alineado a la derecha -->
+            <p class="text-muted text-right"><small>Creado por {{ i.creador }}</small></p>
+
+            <!-- Categoría -->
+            <h3>{{ i.categoria }}</h3>
+
+            <!-- Texto del post (resumen o intro) -->
+            <p>{{ i.texto|truncatewords:50 }}</p>
+
+            <!-- Enlace al post individual -->
+            <a class="btn btn-info" href="{% url 'apps.posts:post_individual' i.id %}">Ingresá a este Post</a>
+        </div>
+    {% empty %}
+        <h1>No hay posts para mostrar</h1>
+    {% endfor %}
+</div>
+{% endblock contenido %}

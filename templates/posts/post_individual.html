@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load colaborador_tags %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <div class="post-content">
+        <!-- Título del post -->
+        <h1 class="display-4">{{ posts.titulo }}</h1>
+
+        <!-- Subtítulo del post (si existe) -->
+        {% if posts.subtitulo %}
+            <h2 class="text-muted">{{ posts.subtitulo }}</h2>
+        {% endif %}
+
+        <!-- Imagen del post (si existe) -->
+        {% if posts.imagen %}
+            <div class="post-image mt-4">
+                <img src="{{ posts.imagen.url }}" alt="Imagen del post" class="img-fluid rounded">
+            </div>
+        {% endif %}
+
+        <!-- Categoría del post -->
+        <p class="badge bg-info text-white">{{ posts.categoria }}</p>
+
+        <!-- Texto del post -->
+        <div class="post-text mt-4">
+            <p style="font-size: 20px; font-family: Arial, Helvetica, sans-serif;">{{ posts.texto }}</p>
+        </div>
+
+        <!-- Información del autor -->
+        <div class="post-meta mt-4 text-muted">
+            <p>Subido por <strong>{{ posts.autor }}</strong></p>
+        </div>
+
+        <!-- Botones de edición y eliminación (solo para superusuarios o colaboradores) -->
+        {% if user.is_superuser or request.user|has_group:"Colaborador" %}
+            <div class="mt-5 d-flex justify-content-start">
+                <a href="{% url 'apps.posts:post_update' pk=posts.id %}" class="btn btn-outline-primary me-3">Modificar post</a>
+                <a href="{% url 'apps.posts:post_delete' pk=posts.id %}" class="btn btn-outline-danger">Eliminar post</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Sección de comentarios -->
+    <div class="comments-section mt-5">
+        {% include 'comentario/crear_comentario.html' %}
+    </div>
+</div>
+{% endblock %}

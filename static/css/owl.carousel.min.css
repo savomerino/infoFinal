@@ -1,0 +1,51 @@
+.owl-carousel {
+    display: none;
+    width: 100%;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    z-index: 1; }
+    .owl-carousel .owl-stage {
+      position: relative;
+      -ms-touch-action: pan-Y;
+      touch-action: manipulation;
+      -moz-backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden; }
+    .owl-carousel .owl-stage:after {
+      content: ".";
+      display: block;
+      clear: both;
+      visibility: hidden;
+      line-height: 0;
+      height: 0; }
+    .owl-carousel .owl-stage-outer {
+      position: relative;
+      overflow: hidden;
+      -webkit-transform: translate3d(0px, 0px, 0px); }
+    .owl-carousel .owl-controls .owl-nav, .owl-carousel .owl-controls .owl-dots {
+      margin-top: 10px;
+      text-align: center;
+      -webkit-tap-highlight-color: transparent; }
+    .owl-carousel .owl-item {
+      float: left;
+      -webkit-backface-visibility: hidden;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-touch-callout: none; }
+  
+  .owl-carousel .owl-item img {
+    display: block;
+    width: 100%;
+    pointer-events: none; }
+  
+  .owl-nav .owl-prev, .owl-nav .owl-next, .owl-dot {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
+  
+  .owl-carousel .cloned {
+    visibility: visible !important; }
+  
+  .owl-carousel.owl-loaded {
+    display: block; }
+  

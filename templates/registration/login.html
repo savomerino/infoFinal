@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>{% block title %} Login de Usuario {% endblock title %}</title>
+
+{% block contenido %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-5 col-md-7 col-sm-10">
+            <div class="card shadow-lg p-4">
+                <h1 class="text-center mb-4">Iniciar Sesión</h1>
+
+                <!-- Mostrar mensajes de error o éxito -->
+                <div class="messages mb-3">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Formulario de login -->
+                <form method="POST">
+                    {% csrf_token %}
+                    
+                    <!-- Campos del formulario -->
+                    <div class="form-group">
+                        <input type="username" name="username" placeholder="Ingresa tu Nombre de Usuario" class="form-control" style="margin-bottom: 10px;" required>
+                        <input type="password" name="password" placeholder="Ingresa tu contraseña" class="form-control" style="margin-bottom: 10px;" required>
+                    </div>
+
+                    <!-- Opciones adicionales -->
+                    <div class="text-center mt-3">
+                        <a href="{% url 'apps.usuario:registrar' %}" class="text-secondary d-block">¿Todavía no estás registrado? ¡Regístrate!</a>
+                        <a href="{% url 'apps.usuario:password_reset' %}" class="text-secondary d-block">¿Olvidaste tu contraseña? ¡Reestablecela!</a>
+                    </div>
+
+                    <!-- Botón de enviar -->
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-success btn-lg px-5">Iniciar sesión</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

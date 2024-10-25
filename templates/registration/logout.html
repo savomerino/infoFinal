@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-10">
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} text-center" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Imagen o ícono de despedida (opcional) -->
+            <div class="text-center mt-4">
+                <h2 class="mt-3">Has cerrado sesión correctamente.</h2>
+            </div>
+
+            <!-- Enlace para volver al inicio -->
+            <div class="text-center mt-4">
+                <a href="{% url 'index' %}" class="btn btn-primary btn-lg">Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

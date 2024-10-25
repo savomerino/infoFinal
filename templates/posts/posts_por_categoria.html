@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block contenido %}
+<div class="container mt-5">
+    <!-- Título de la página -->
+    <div class="text-center mb-4">
+        <h1 class="display-5 text-primary">Posts por Categoría</h1>
+        <hr class="my-4">
+    </div>
+
+    <!-- Lista de posts -->
+    {% if posts %}
+        <div class="list-group">
+            {% for post in posts %}
+                <a href="{% url 'apps.posts:post_individual' id=post.id %}" 
+                   class="list-group-item list-group-item-action py-3">
+                    <h5 class="mb-1">{{ post.titulo }}</h5>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-warning text-center" role="alert">
+            No hay posts disponibles en esta categoría.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

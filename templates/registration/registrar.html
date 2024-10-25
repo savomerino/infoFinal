@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<title>{% block title %} Registro de Usuario {% endblock title %}</title>
+
+{% block contenido %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-12">
+            <div class="card shadow-lg p-4">
+                <h1 class="text-center mb-4">Registro de Usuarios</h1>
+
+                <!-- Mostrar mensajes de error o éxito -->
+                <div class="messages mb-3">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Formulario de registro -->
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <!-- Campos del formulario -->
+                    <div class="form-group col-sm-10">
+                        {{ form.as_p }}
+                    </div>
+
+                    <!-- Botón de enviar -->
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-success btn-lg px-5">Registrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
